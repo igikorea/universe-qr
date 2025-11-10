@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>유니에듀 앱 실행 중...</title>
+    <script>
+      // 기기 판별
+      const ua = navigator.userAgent.toLowerCase();
+      const isAndroid = ua.indexOf("android") > -1;
+      const isIOS = /iphone|ipad|ipod/.test(ua);
+
+      // 앱 스킴 & 스토어 링크 정의
+      const iosScheme = "uniedu://page/ar-tong";
+      const androidIntent =
+        "intent://page/ar-tong#Intent;scheme=uniedu;package=com.igikorea.uni_edu;end";
+
+      const appStoreURL = "https://apps.apple.com/app/idYOUR_APP_ID"; // ⚠️ 실제 앱스토어 ID로 교체
+      const playStoreURL =
+        "https://play.google.com/store/apps/details?id=com.igikorea.uni_edu";
+
+      // OS별 실행 로직
+      if (isIOS) {
+        // iOS: 앱 실행 시도
+        window.location.href = iosScheme;
+
+        // 앱이 없을 경우 앱스토어로 이동
+        setTimeout(() => {
+          window.location.href = appStoreURL;
+        }, 2000);
+      } else if (isAndroid) {
+        // Android: Intent 실행
+        window.location.href = androidIntent;
+
+        // 앱이 없을 경우 플레이스토어로 이동
+        setTimeout(() => {
+          window.location.href = playStoreURL;
+        }, 2000);
+      } else {
+        // PC 등에서는 안내 페이지 출력
+        document.write(
+          "<h3>모바일 기기에서 QR 코드를 스캔해주세요.</h3>"
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <h3>유니에듀 앱을 여는 중입니다...</h3>
+  </body>
+</html>
