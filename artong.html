@@ -23,28 +23,25 @@
       } else if (isIOS) {
           let movedToBackground = false;
 
-            // 앱 실행 시 Safari가 백그라운드로 전환될 때 감지
-            const handleVisibility = () => {
-              if (document.hidden) movedToBackground = true;
-            };
+                  const handleVisibility = () => {
+                    if (document.hidden) movedToBackground = true;
+                  };
 
-            const handleBlur = () => {
-              movedToBackground = true;
-            };
+                  document.addEventListener("visibilitychange", handleVisibility);
+                  window.addEventListener("pagehide", handleVisibility);
 
-            document.addEventListener("visibilitychange", handleVisibility);
-            window.addEventListener("pagehide", handleVisibility);
-            window.addEventListener("blur", handleBlur);
+                  // ✅ a 태그 클릭 기반 (Safari 17+ 대응)
+                  const link = document.createElement("a");
+                  link.href = iosScheme;
+                  document.body.appendChild(link);
+                  link.click();
 
-            // 앱 실행 시도
-            window.location.href = iosScheme;
-
-            // 앱이 없으면 App Store로 이동
-            setTimeout(() => {
-              if (!movedToBackground) {
-                window.location.href = appStoreURL;
-              }
-            }, 1800);
+                  // ✅ fallback: 앱 미설치 시 App Store로 이동
+                  setTimeout(() => {
+                    if (!movedToBackground) {
+                      window.location.href = appStoreURL;
+                    }
+                  }, 2000);
       }
     </script>
   </head>
