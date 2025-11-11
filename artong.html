@@ -21,12 +21,20 @@
         window.location.replace(androidIntent);
       } else if (isIOS) {
         // iOS: 앱 실행 시도
-        window.location.href = iosScheme;
+         let hidden = false;
 
-        // 앱이 없을 경우 앱스토어로 이동
-        setTimeout(() => {
-          window.location.href = appStoreURL;
-        }, 2000);
+         document.addEventListener("visibilitychange", () => {
+           if (document.hidden) hidden = true;
+         });
+
+         window.location.href = iosScheme;
+
+         // 앱이 없을 경우 앱스토어로 이동 (앱이 열렸다면 실행 안됨)
+         setTimeout(() => {
+           if (!hidden) {
+             window.location.href = appStoreURL;
+           }
+         }, 2000);
       } else {
         document.write("<h3>모바일 기기에서 QR 코드를 스캔해주세요.</h3>");
       }
