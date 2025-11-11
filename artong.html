@@ -21,14 +21,27 @@
       if (isAndroid) {
         window.location.replace(androidIntent);
       } else if (isIOS) {
-          // 앱 실행
-         window.location.href = iosScheme;
+        let movedToBackground = false;
 
-         // ❌ 여기서 visibilityState 감지를 안 해서
-         // 앱이 실제로 켜져도 아래 setTimeout이 계속 실행됨
-         setTimeout(() => {
-           window.location.href = appStoreURL;
-         }, 1000);
+        const handleVisibility = () => {
+          if (document.hidden) movedToBackground = true;
+        };
+
+        document.addEventListener("visibilitychange", handleVisibility);
+        window.addEventListener("pagehide", handleVisibility);
+
+        // iframe을 통한 앱 실행 시도 (Safari에서 "유효하지 않은 주소" 방지)
+        const iframe = document.createElement("iframe");
+        iframe.style.display = "none";
+        iframe.src = iosScheme;
+        document.body.appendChild(iframe);
+
+        // 앱 미설치 시 App Store로 이동
+        setTimeout(() => {
+          if (!movedToBackground) {
+            window.location.href = appStoreURL;
+          }
+        }, 1000);
       }
     </script>
   </head>
