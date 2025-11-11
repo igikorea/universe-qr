@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.igikorea.universe",
+      "sha256_cert_fingerprints": [
+        "B3:F6:8D:DF:E1:73:A1:00:81:AA:47:F2:1F:0A:3B:B1:A8:68:41:3E"
+      ]
+    }
+  }
+]
