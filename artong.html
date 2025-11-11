@@ -24,7 +24,8 @@
         if (isAndroid) {
           window.location.replace(androidIntent);
         } else if (isIOS) {
-          window.location.replace(appStoreURL);
+            window.location.href = androidIntent;
+            window.location.replace(appStoreURL);
 
 <!--          let movedToBackground = false;-->
 <!---->
