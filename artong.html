@@ -16,35 +16,11 @@
       // 스토어 링크
       const appStoreURL = "itms-apps://itunes.apple.com/kr/app/%EC%9C%A0%EB%8B%88%EB%B2%84%EC%8A%A4/id6748672708";
 
-<!--      const showFallbackUI = () => {-->
-<!--          document.getElementById('loading-message').style.display = 'none';-->
-<!--          document.getElementById('fallback-ui').style.display = 'block';-->
-<!--        };-->
-
         if (isAndroid) {
           window.location.replace(androidIntent);
         } else if (isIOS) {
-            window.location.href = androidIntent;
+            window.location.replace(androidIntent);
             window.location.replace(appStoreURL);
-
-<!--          let movedToBackground = false;-->
-<!---->
-<!--          const handleSuccess = () => {-->
-<!--            movedToBackground = true;-->
-<!--            clearTimeout(fallbackTimer);-->
-<!--          };-->
-<!---->
-<!--          document.addEventListener("visibilitychange", () => {-->
-<!--            if (document.hidden) handleSuccess();-->
-<!--          });-->
-<!--          window.addEventListener("blur", handleSuccess);-->
-<!---->
-<!--          const fallbackTimer = setTimeout(() => {-->
-<!--            if (!movedToBackground) {-->
-<!--              showFallbackUI();-->
-<!--            }-->
-<!--          }, 2500);-->
-
         }
     </script>
   </head>
