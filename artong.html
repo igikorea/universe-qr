@@ -1,50 +1,50 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="ko">-->
-<!--  <head>-->
-<!--    <meta charset="utf-8" />-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
-<!--    <title>유니에듀 앱 실행 중...</title>-->
-<!--    <script>-->
-<!--      const ua = navigator.userAgent.toLowerCase();-->
-<!--      const isAndroid = ua.includes("android");-->
-<!--      const isIOS = /iphone|ipad|ipod/.test(ua);-->
-<!---->
-<!--      // 앱 실행 링크-->
-<!--      const iosScheme = "uniedu://page/ar-tong";-->
-<!--      const androidIntent = "intent://page/ar-tong/#Intent;scheme=uniedu;package=com.igikorea.uni_edu;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.igikorea.uni_edu;end";-->
-<!---->
-<!--      // 스토어 링크-->
-<!--      const appStoreURL = "https://apps.apple.com/kr/app/%EC%9C%A0%EB%8B%88%EB%B2%84%EC%8A%A4/id6748672708";-->
-<!---->
-<!--      if (isAndroid) {-->
-<!--        // ✅ Chrome이 직접 intent 처리 (fallback 포함)-->
-<!--        window.location.replace(androidIntent);-->
-<!--      } else if (isIOS) {-->
-<!--          let movedToBackground = false;-->
-<!---->
-<!--          const handleVisibility = () => {-->
-<!--            if (document.hidden) movedToBackground = true;-->
-<!--          };-->
-<!---->
-<!--          const handleBlur = () => {-->
-<!--            movedToBackground = true;-->
-<!--          };-->
-<!---->
-<!--          document.addEventListener("visibilitychange", handleVisibility);-->
-<!--          window.addEventListener("pagehide", handleVisibility);-->
-<!--          window.addEventListener("blur", handleBlur);-->
-<!---->
-<!--          window.location.href = iosScheme;-->
-<!---->
-<!--          setTimeout(() => {-->
-<!--            if (!movedToBackground) {-->
-<!--              window.location.href = appStoreURL;-->
-<!--            }-->
-<!--          }, 1800);-->
-<!--        }-->
-<!--    </script>-->
-<!--  </head>-->
-<!--</html>-->
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>유니에듀 앱 실행 중...</title>
+    <script>
+      const ua = navigator.userAgent.toLowerCase();
+      const isAndroid = ua.includes("android");
+      const isIOS = /iphone|ipad|ipod/.test(ua);
+
+      // 앱 실행 링크
+      const iosScheme = "uniedu://page/ar-tong";
+      const androidIntent = "intent://page/ar-tong/#Intent;scheme=uniedu;package=com.igikorea.uni_edu;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.igikorea.uni_edu;end";
+
+      // 스토어 링크
+      const appStoreURL = "https://apps.apple.com/kr/app/%EC%9C%A0%EB%8B%88%EB%B2%84%EC%8A%A4/id6748672708";
+
+      if (isAndroid) {
+        // ✅ Chrome이 직접 intent 처리 (fallback 포함)
+        window.location.replace(androidIntent);
+      } else if (isIOS) {
+          let movedToBackground = false;
+
+          const handleVisibility = () => {
+            if (document.hidden) movedToBackground = true;
+          };
+
+          const handleBlur = () => {
+            movedToBackground = true;
+          };
+
+          document.addEventListener("visibilitychange", handleVisibility);
+          window.addEventListener("pagehide", handleVisibility);
+          window.addEventListener("blur", handleBlur);
+
+          window.location.href = iosScheme;
+
+          setTimeout(() => {
+            if (!movedToBackground) {
+              window.location.href = appStoreURL;
+            }
+          }, 1800);
+        }
+    </script>
+  </head>
+</html>
 
 
 <!DOCTYPE html>
@@ -60,35 +60,14 @@
 
       // 앱 실행 링크
       const iosScheme = "uniedu://page/ar-tong";
-      const androidIntent = "intent://page/ar-tong/#Intent;scheme=uniedu;package=com.igikorea.uni_edu;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE";
+      const androidIntent = "intent://page/ar-tong/#Intent;scheme=uniedu;package=com.igikorea.uni_edu;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.igikorea.uni_edu;end";
 
       // 스토어 링크
       const appStoreURL = "https://apps.apple.com/kr/app/%EC%9C%A0%EB%8B%88%EB%B2%84%EC%8A%A4/id6748672708";
-      const playSotreURL = "https://play.google.com/store/apps/details?id=com.igikorea.uni_edu;end"
 
       if (isAndroid) {
-          let movedToBackground = false;
-
-          const handleVisibility = () => {
-            if (document.hidden) movedToBackground = true;
-          };
-
-          const handleBlur = () => {
-            movedToBackground = true;
-          };
-
-          document.addEventListener("visibilitychange", handleVisibility);
-          window.addEventListener("pagehide", handleVisibility);
-          window.addEventListener("blur", handleBlur);
-
-          window.location.href = androidIntent;
-
-          setTimeout(() => {
-            if (!movedToBackground) {
-              window.location.href = playSotreURL;
-            }
-          }, 1800);
-        }
+        // ✅ Chrome이 직접 intent 처리 (fallback 포함)
+        window.location.replace(androidIntent);
       } else if (isIOS) {
           let movedToBackground = false;
 
