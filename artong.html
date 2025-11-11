@@ -21,33 +21,30 @@
       if (isAndroid) {
         window.location.replace(androidIntent);
       } else if (isIOS) {
-          indow.location.href = iosScheme;
-<!--        let movedToBackground = false;-->
-<!--        let storeTimer;-->
-<!---->
-<!--        const handleBackground = () => {-->
-<!--          movedToBackground = true;-->
-<!--          clearTimeout(storeTimer);-->
-<!--        };-->
-<!---->
-<!--        document.addEventListener("visibilitychange", () => {-->
-<!--          if (document.hidden) handleBackground();-->
-<!--        });-->
-<!--        window.addEventListener("blur", handleBackground);-->
-<!--        window.addEventListener("pagehide", handleBackground);-->
-<!---->
-<!--        // iOS에서 iframe 방식으로 앱 실행 시도-->
-<!--        const iframe = document.createElement("iframe");-->
-<!--        iframe.style.display = "none";-->
-<!--        iframe.src = iosScheme;-->
-<!--        document.body.appendChild(iframe);-->
-<!---->
-<!--        // 앱 미설치 시 App Store로 이동-->
-<!--        storeTimer = setTimeout(() => {-->
-<!--          if (!movedToBackground) {-->
-<!--            window.location.href = appStoreURL;-->
-<!--          }-->
-<!--        }, 1500);-->
+          let movedToBackground = false;
+
+            // 앱 실행 시 Safari가 백그라운드로 전환될 때 감지
+            const handleVisibility = () => {
+              if (document.hidden) movedToBackground = true;
+            };
+
+            const handleBlur = () => {
+              movedToBackground = true;
+            };
+
+            document.addEventListener("visibilitychange", handleVisibility);
+            window.addEventListener("pagehide", handleVisibility);
+            window.addEventListener("blur", handleBlur);
+
+            // 앱 실행 시도
+            window.location.href = iosScheme;
+
+            // 앱이 없으면 App Store로 이동
+            setTimeout(() => {
+              if (!movedToBackground) {
+                window.location.href = appStoreURL;
+              }
+            }, 1800);
       }
     </script>
   </head>
