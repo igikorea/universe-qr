@@ -23,16 +23,17 @@
         let movedToBackground = false;
         let storeTimer;
 
-        const markBackground = () => {
-          movedToBackground = true;
-          clearTimeout(storeTimer);
+        // 앱이 실행되면(백그라운드 전환 시) store 이동 중단
+        const handleVisibilityChange = () => {
+          if (document.hidden || document.visibilityState === "hidden") {
+            movedToBackground = true;
+            clearTimeout(storeTimer);
+          }
         };
 
-        document.addEventListener("visibilitychange", () => {
-          if (document.hidden) markBackground();
-        });
-        window.addEventListener("pagehide", markBackground);
-        window.addEventListener("blur", markBackground);
+        window.addEventListener("blur", handleVisibilityChange);
+        window.addEventListener("pagehide", handleVisibilityChange);
+        document.addEventListener("visibilitychange", handleVisibilityChange);
 
         // 앱 실행 시도
         window.location.href = iosScheme;
