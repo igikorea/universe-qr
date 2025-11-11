@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appID": "TEAMID.com.igikorea.uni-edu",
+        "paths": [ "/ar-tong*", "/main/ar-tong*", "*" ]
+      }
+    ]
+  }
+}
