@@ -21,32 +21,33 @@
       if (isAndroid) {
         window.location.replace(androidIntent);
       } else if (isIOS) {
-        let movedToBackground = false;
-        let storeTimer;
-
-        const handleBackground = () => {
-          movedToBackground = true;
-          clearTimeout(storeTimer);
-        };
-
-        document.addEventListener("visibilitychange", () => {
-          if (document.hidden) handleBackground();
-        });
-        window.addEventListener("blur", handleBackground);
-        window.addEventListener("pagehide", handleBackground);
-
-        // iOS에서 iframe 방식으로 앱 실행 시도
-        const iframe = document.createElement("iframe");
-        iframe.style.display = "none";
-        iframe.src = iosScheme;
-        document.body.appendChild(iframe);
-
-        // 앱 미설치 시 App Store로 이동
-        storeTimer = setTimeout(() => {
-          if (!movedToBackground) {
-            window.location.href = appStoreURL;
-          }
-        }, 1500);
+          indow.location.href = iosScheme;
+<!--        let movedToBackground = false;-->
+<!--        let storeTimer;-->
+<!---->
+<!--        const handleBackground = () => {-->
+<!--          movedToBackground = true;-->
+<!--          clearTimeout(storeTimer);-->
+<!--        };-->
+<!---->
+<!--        document.addEventListener("visibilitychange", () => {-->
+<!--          if (document.hidden) handleBackground();-->
+<!--        });-->
+<!--        window.addEventListener("blur", handleBackground);-->
+<!--        window.addEventListener("pagehide", handleBackground);-->
+<!---->
+<!--        // iOS에서 iframe 방식으로 앱 실행 시도-->
+<!--        const iframe = document.createElement("iframe");-->
+<!--        iframe.style.display = "none";-->
+<!--        iframe.src = iosScheme;-->
+<!--        document.body.appendChild(iframe);-->
+<!---->
+<!--        // 앱 미설치 시 App Store로 이동-->
+<!--        storeTimer = setTimeout(() => {-->
+<!--          if (!movedToBackground) {-->
+<!--            window.location.href = appStoreURL;-->
+<!--          }-->
+<!--        }, 1500);-->
       }
     </script>
   </head>
