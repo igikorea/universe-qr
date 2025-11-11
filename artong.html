@@ -20,11 +20,25 @@
         // ✅ Chrome이 직접 intent 처리 (fallback 포함)
         window.location.replace(androidIntent);
       } else if (isIOS) {
+          // iOS: 앱 실행 시도
+          let movedToBackground = false;
+
+          // 앱이 실행되면 Safari가 background로 전환됨
+          document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+              movedToBackground = true;
+            }
+          });
+
           // 앱 열기 시도
           window.location.href = iosScheme;
 
           // 1.5초 후에도 여전히 Safari가 foreground라면 → 앱 미설치로 판단하고 스토어 이동
-        
+          setTimeout(() => {
+            if (!movedToBackground) {
+              window.location.href = appStoreURL;
+            }
+          }, 1500);
         } else {
         document.write("<h3>모바일 기기에서 QR 코드를 스캔해주세요.</h3>");
       }
