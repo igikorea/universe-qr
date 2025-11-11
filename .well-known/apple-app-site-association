@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appID": "N9Y89LQG42.com.igikorea.uni-edu",
+        "appID": "N9Y89LQG42.com.igikorea.uni_edu",
         "paths": [ "/ar-tong*", "/main/ar-tong*", "*" ]
       }
     ]
