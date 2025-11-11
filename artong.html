@@ -20,29 +20,28 @@
         // ✅ Chrome이 직접 intent 처리 (fallback 포함)
         window.location.replace(androidIntent);
       } else if (isIOS) {
-        // iOS: 앱 실행 시도
-        let movedToBackground = false;
+          let movedToBackground = false;
 
-        // Safari → 앱 전환 시 백그라운드 감지
-        const handleVisibility = () => {
-          if (document.hidden) movedToBackground = true;
-        };
+          const handleVisibility = () => {
+            if (document.hidden) movedToBackground = true;
+          };
 
-        document.addEventListener("visibilitychange", handleVisibility);
-        window.addEventListener("pagehide", handleVisibility);
+          const handleBlur = () => {
+            movedToBackground = true;
+          };
 
-        // 앱 열기 시도
-        window.location.href = iosScheme;
+          document.addEventListener("visibilitychange", handleVisibility);
+          window.addEventListener("pagehide", handleVisibility);
+          window.addEventListener("blur", handleBlur);
 
-        // 1.5초 후에도 Safari가 포그라운드면 → 앱 미설치 판단 후 스토어 이동
-        setTimeout(() => {
-          if (!movedToBackground) {
-            window.location.href = appStoreURL;
-          }
-        }, 1500);
-      } else {
-        document.write("<h3>모바일 기기에서 QR 코드를 스캔해주세요.</h3>");
-      }
+          window.location.href = iosScheme;
+
+          setTimeout(() => {
+            if (!movedToBackground) {
+              window.location.href = appStoreURL;
+            }
+          }, 1800);
+        }
     </script>
   </head>
 </html>
