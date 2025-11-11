@@ -20,23 +20,13 @@
         // ✅ Chrome이 직접 intent 처리 (fallback 포함)
         window.location.replace(androidIntent);
       } else if (isIOS) {
-        // ✅ iOS: 앱 실행 시도
-        let hidden = false;
-        document.addEventListener("visibilitychange", () => {
-          if (document.hidden) hidden = true;
-        });
+        // iOS: 앱 실행 시도
+        window.location.href = iosScheme;
 
-        const iframe = document.createElement("iframe");
-        iframe.style.display = "none";
-        iframe.src = iosScheme;
-        document.body.appendChild(iframe);
-
-        // 앱이 없을 경우 fallback
+        // 앱이 없을 경우 앱스토어로 이동
         setTimeout(() => {
-          if (!hidden) {
-            window.location.replace(appStoreURL);
-          }
-        }, 1200);
+          window.location.href = appStoreURL;
+        }, 2000);
       } else {
         document.write("<h3>모바일 기기에서 QR 코드를 스캔해주세요.</h3>");
       }
