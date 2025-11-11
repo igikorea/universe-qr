@@ -24,11 +24,9 @@
           // 앱 실행
          window.location.href = iosScheme;
 
-         // ❌ 여기서 visibilityState 감지를 안 해서
-         // 앱이 실제로 켜져도 아래 setTimeout이 계속 실행됨
          setTimeout(() => {
            window.location.href = appStoreURL;
-         }, 10);
+         }, 4000);
       }
     </script>
   </head>
