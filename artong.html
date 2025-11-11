@@ -11,45 +11,46 @@
 
       // 앱 실행 링크
       const iosScheme = "uniedu://page/ar-tong";
-      const androidIntent = "intent://page/ar-tong/#Intent;scheme=uniedu;package=com.igikorea.uni_edu;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.igikorea.uni_edu;end";
+      const androidIntent =
+        "intent://page/ar-tong/#Intent;scheme=uniedu;package=com.igikorea.uni_edu;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.igikorea.uni_edu;end";
 
       // 스토어 링크
-      const appStoreURL = "itms-apps://itunes.apple.com/kr/app/%EC%9C%A0%EB%8B%88%EB%B2%84%EC%8A%A4/id6748672708";
+      const appStoreURL =
+        "itms-apps://itunes.apple.com/kr/app/%EC%9C%A0%EB%8B%88%EB%B2%84%EC%8A%A4/id6748672708";
 
-        if (isAndroid) {
-          window.location.replace(androidIntent);
-        } else if (isIOS) {
-            window.location.replace(androidIntent);
-            window.location.replace(appStoreURL);
-        }
+      if (isAndroid) {
+        window.location.replace(androidIntent);
+      } else if (isIOS) {
+        let movedToBackground = false;
+        let storeTimer;
+
+        const handleBackground = () => {
+          movedToBackground = true;
+          clearTimeout(storeTimer);
+        };
+
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) handleBackground();
+        });
+        window.addEventListener("blur", handleBackground);
+        window.addEventListener("pagehide", handleBackground);
+
+        // iOS에서 iframe 방식으로 앱 실행 시도
+        const iframe = document.createElement("iframe");
+        iframe.style.display = "none";
+        iframe.src = iosScheme;
+        document.body.appendChild(iframe);
+
+        // 앱 미설치 시 App Store로 이동
+        storeTimer = setTimeout(() => {
+          if (!movedToBackground) {
+            window.location.href = appStoreURL;
+          }
+        }, 1500);
+      }
     </script>
   </head>
+  <body>
+    <h3>유니에듀 앱을 여는 중입니다...</h3>
+  </body>
 </html>
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="ko">-->
-<!--  <head>-->
-<!--    <meta charset="utf-8" />-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
-<!--    <title>유니에듀 앱 실행 중...</title>-->
-<!--    <script>-->
-<!--      window.onload = function () {-->
-<!--        const ua = navigator.userAgent.toLowerCase();-->
-<!--        const isAndroid = ua.indexOf("android") > -1;-->
-<!--        const isiOS = /iphone|ipad|ipod/.test(ua);-->
-<!--        -->
-<!--        const appStoreURL = "itms-apps://apps.apple.com/kr/app/%EC%9C%A0%EB%8B%88%EB%B2%84%EC%8A%A4/id6748672708";-->
-<!--        const playStoreURL = "https://play.google.com/store/apps/details?id=com.igikorea.uni_edu&hl=ko";-->
-<!---->
-<!--        if (isiOS) {-->
-<!--            window.location.href = appStoreURL;-->
-<!--        } else if (isAndroid) {-->
-<!--            window.location.href = playStoreURL;-->
-<!--        }-->
-<!--      };-->
-<!--    </script>-->
-<!--  </head>-->
-<!--  <body>-->
-<!--    <h3>유니에듀 앱을 여는 중입니다...</h3>-->
-<!--  </body>-->
-<!--</html>-->
