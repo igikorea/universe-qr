@@ -5,54 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>유니에듀 앱 실행 중...</title>
     <script>
-      // 기기 판별
       const ua = navigator.userAgent.toLowerCase();
       const isAndroid = ua.includes("android");
       const isIOS = /iphone|ipad|ipod/.test(ua);
 
-      // 앱 스킴 & 스토어 링크 정의
+      // 앱 실행 링크
       const iosScheme = "uniedu://page/ar-tong";
-      // ✅ Android: 모바일 전용 market 링크 및 fallback URL 포함 intent
       const androidIntent =
-        "intent://page/ar-tong#Intent;scheme=uniedu;package=com.igikorea.uni_edu;S.browser_fallback_url=market://details?id=com.igikorea.uni_edu;end";
+        "intent://page/ar-tong#Intent;scheme=uniedu;package=com.igikorea.uni_edu;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.igikorea.uni_edu;end";
 
+      // 스토어 링크
       const appStoreURL = "https://apps.apple.com/kr/app/%EC%9C%A0%EB%8B%88%EB%B2%84%EC%8A%A4/id6748672708";
-      const playStoreURL = "market://details?id=com.igikorea.uni_edu";
 
-      // 앱 실행 여부 감지를 위한 상태
-      let isHidden = false;
-      document.addEventListener("visibilitychange", () => {
-        if (document.hidden) isHidden = true;
-      });
+      if (isAndroid) {
+        // ✅ Chrome이 직접 intent 처리 (fallback 포함)
+        window.location.replace(androidIntent);
+      } else if (isIOS) {
+        // ✅ iOS: 앱 실행 시도
+        let hidden = false;
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) hidden = true;
+        });
 
-      // OS별 실행 로직
-      if (isIOS) {
-        // iOS: 앱 실행 시도 (iframe 사용으로 팝업 방지)
         const iframe = document.createElement("iframe");
         iframe.style.display = "none";
         iframe.src = iosScheme;
         document.body.appendChild(iframe);
 
+        // 앱이 없을 경우 fallback
         setTimeout(() => {
-          if (!isHidden) window.location.href = appStoreURL;
-        }, 1500);
-      } else if (isAndroid) {
-        // Android: Intent 실행 (market fallback 자동)
-        const link = document.createElement("a");
-        link.href = androidIntent;
-        document.body.appendChild(link);
-        link.click();
-
-        setTimeout(() => {
-          if (!isHidden) window.location.href = playStoreURL;
-        }, 1500);
+          if (!hidden) {
+            window.location.replace(appStoreURL);
+          }
+        }, 1200);
       } else {
-        // PC 등에서는 안내 페이지 출력
         document.write("<h3>모바일 기기에서 QR 코드를 스캔해주세요.</h3>");
       }
     </script>
   </head>
-  <body>
-    <h3>유니에듀 앱을 여는 중입니다...</h3>
-  </body>
 </html>
