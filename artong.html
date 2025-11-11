@@ -20,32 +20,38 @@
         // ✅ Chrome이 직접 intent 처리 (fallback 포함)
         window.location.replace(androidIntent);
       } else if (isIOS) {
-        let movedToBackground = false;
-        let storeTimer;
+          const appStoreURL = "itms-apps://apps.apple.com/kr/app/유니버스/id6748672708";
+          const iosScheme = "uniedu://page/ar-tong";
 
-        // 앱이 실행되면(백그라운드 전환 시) store 이동 중단
-        const handleVisibilityChange = () => {
-          if (document.hidden || document.visibilityState === "hidden") {
+          let movedToBackground = false;
+          let storeTimer;
+
+          // 백그라운드 감지
+          const handleBackground = () => {
             movedToBackground = true;
             clearTimeout(storeTimer);
-          }
-        };
+          };
 
-        window.addEventListener("blur", handleVisibilityChange);
-        window.addEventListener("pagehide", handleVisibilityChange);
-        document.addEventListener("visibilitychange", handleVisibilityChange);
+          document.addEventListener("visibilitychange", () => {
+            if (document.hidden) handleBackground();
+          });
+          window.addEventListener("blur", handleBackground);
+          window.addEventListener("pagehide", handleBackground);
 
-        // 앱 실행 시도
-        window.location.href = iosScheme;
+          // iframe을 통한 앱 실행 시도 (Safari 대응)
+          const iframe = document.createElement("iframe");
+          iframe.style.display = "none";
+          iframe.src = iosScheme;
+          document.body.appendChild(iframe);
 
-        // 앱 미설치 시 fallback 실행
-        storeTimer = setTimeout(() => {
-          if (!movedToBackground) {
-            console.log("앱이 설치되어 있지 않음 → App Store 이동");
-            window.location.replace(appStoreURL);
-          }
-        }, 2000);
-      }
+          // 앱 미설치 시 fallback
+          storeTimer = setTimeout(() => {
+            if (!movedToBackground) {
+              console.log("앱이 설치되어 있지 않음 → App Store 이동");
+              window.location.href = appStoreURL;
+            }
+          }, 1500);
+        }
     </script>
   </head>
 </html>
