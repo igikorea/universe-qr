@@ -20,37 +20,26 @@
         // ✅ Chrome이 직접 intent 처리 (fallback 포함)
         window.location.replace(androidIntent);
       } else if (isIOS) {
-          const appStoreURL = "itms-apps://apps.apple.com/kr/app/유니버스/id6748672708";
-          const iosScheme = "uniedu://page/ar-tong";
+          window.location.href = iosScheme;
 
           let movedToBackground = false;
-          let storeTimer;
 
-          // 백그라운드 감지
-          const handleBackground = () => {
+          const handleSuccess = () => {
             movedToBackground = true;
-            clearTimeout(storeTimer);
+            clearTimeout(fallbackTimer);
           };
 
           document.addEventListener("visibilitychange", () => {
-            if (document.hidden) handleBackground();
+            if (document.hidden) handleSuccess();
           });
-          window.addEventListener("blur", handleBackground);
-          window.addEventListener("pagehide", handleBackground);
+          window.addEventListener("blur", handleSuccess);
 
-          // iframe을 통한 앱 실행 시도 (Safari 대응)
-          const iframe = document.createElement("iframe");
-          iframe.style.display = "none";
-          iframe.src = iosScheme;
-          document.body.appendChild(iframe);
-
-          // 앱 미설치 시 fallback
-          storeTimer = setTimeout(() => {
+          const fallbackTimer = setTimeout(() => {
             if (!movedToBackground) {
-              console.log("앱이 설치되어 있지 않음 → App Store 이동");
-              window.location.href = appStoreURL;
+              showFallbackUI();
             }
-          }, 1500);
+          }, 2500);
+
         }
     </script>
   </head>
